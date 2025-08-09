@@ -130,77 +130,83 @@ def parse_data(content: str) -> list[int]:
     return list(map(int, content.strip().split(",")))
 
 
-async def part1(data: list[int]) -> int:
-    async def run(phase_settings: list[int]) -> int:
-        pa, pb, pc, pd, pe = phase_settings
+def part1(data: list[int]) -> int:
+    async def part1(data: list[int]) -> int:
+        async def run(phase_settings: list[int]) -> int:
+            pa, pb, pc, pd, pe = phase_settings
 
-        a_inputs = asyncio.Queue()
-        a_to_b = asyncio.Queue()
-        b_to_c = asyncio.Queue()
-        c_to_d = asyncio.Queue()
-        d_to_e = asyncio.Queue()
-        e_outputs = asyncio.Queue()
+            a_inputs = asyncio.Queue()
+            a_to_b = asyncio.Queue()
+            b_to_c = asyncio.Queue()
+            c_to_d = asyncio.Queue()
+            d_to_e = asyncio.Queue()
+            e_outputs = asyncio.Queue()
 
-        amp_a = Program(data, a_inputs, a_to_b)
-        amp_b = Program(data, a_to_b, b_to_c)
-        amp_c = Program(data, b_to_c, c_to_d)
-        amp_d = Program(data, c_to_d, d_to_e)
-        amp_e = Program(data, d_to_e, e_outputs)
+            amp_a = Program(data, a_inputs, a_to_b)
+            amp_b = Program(data, a_to_b, b_to_c)
+            amp_c = Program(data, b_to_c, c_to_d)
+            amp_d = Program(data, c_to_d, d_to_e)
+            amp_e = Program(data, d_to_e, e_outputs)
 
-        await amp_a.input(pa)
-        await amp_b.input(pb)
-        await amp_c.input(pc)
-        await amp_d.input(pd)
-        await amp_e.input(pe)
+            await amp_a.input(pa)
+            await amp_b.input(pb)
+            await amp_c.input(pc)
+            await amp_d.input(pd)
+            await amp_e.input(pe)
 
-        await amp_a.input(0)
-        await asyncio.gather(
-            amp_a.run(),
-            amp_b.run(),
-            amp_c.run(),
-            amp_d.run(),
-            amp_e.run(),
-        )
+            await amp_a.input(0)
+            await asyncio.gather(
+                amp_a.run(),
+                amp_b.run(),
+                amp_c.run(),
+                amp_d.run(),
+                amp_e.run(),
+            )
 
-        return await amp_e.output()
+            return await amp_e.output()
 
-    return max(await asyncio.gather(*map(run, it.permutations(range(5)))))
+        return max(await asyncio.gather(*map(run, it.permutations(range(5)))))
+
+    return asyncio.run(part1(data))
 
 
-async def part2(data: list[int]) -> int:
-    async def run(phase_settings: list[int]) -> int:
-        pa, pb, pc, pd, pe = phase_settings
+def part2(data: list[int]) -> int:
+    async def part2(data: list[int]) -> int:
+        async def run(phase_settings: list[int]) -> int:
+            pa, pb, pc, pd, pe = phase_settings
 
-        a_to_b = asyncio.Queue()
-        b_to_c = asyncio.Queue()
-        c_to_d = asyncio.Queue()
-        d_to_e = asyncio.Queue()
-        e_to_a = asyncio.Queue()
+            a_to_b = asyncio.Queue()
+            b_to_c = asyncio.Queue()
+            c_to_d = asyncio.Queue()
+            d_to_e = asyncio.Queue()
+            e_to_a = asyncio.Queue()
 
-        amp_a = Program(data, e_to_a, a_to_b)
-        amp_b = Program(data, a_to_b, b_to_c)
-        amp_c = Program(data, b_to_c, c_to_d)
-        amp_d = Program(data, c_to_d, d_to_e)
-        amp_e = Program(data, d_to_e, e_to_a)
+            amp_a = Program(data, e_to_a, a_to_b)
+            amp_b = Program(data, a_to_b, b_to_c)
+            amp_c = Program(data, b_to_c, c_to_d)
+            amp_d = Program(data, c_to_d, d_to_e)
+            amp_e = Program(data, d_to_e, e_to_a)
 
-        await amp_a.input(pa)
-        await amp_b.input(pb)
-        await amp_c.input(pc)
-        await amp_d.input(pd)
-        await amp_e.input(pe)
+            await amp_a.input(pa)
+            await amp_b.input(pb)
+            await amp_c.input(pc)
+            await amp_d.input(pd)
+            await amp_e.input(pe)
 
-        await amp_a.input(0)
-        await asyncio.gather(
-            amp_a.run(),
-            amp_b.run(),
-            amp_c.run(),
-            amp_d.run(),
-            amp_e.run(),
-        )
+            await amp_a.input(0)
+            await asyncio.gather(
+                amp_a.run(),
+                amp_b.run(),
+                amp_c.run(),
+                amp_d.run(),
+                amp_e.run(),
+            )
 
-        return await amp_e.output()
+            return await amp_e.output()
 
-    return max(await asyncio.gather(*map(run, it.permutations(range(5, 10)))))
+        return max(await asyncio.gather(*map(run, it.permutations(range(5, 10)))))
+
+    return asyncio.run(part2(data))
 
 
 if __name__ == "__main__":
@@ -208,5 +214,5 @@ if __name__ == "__main__":
         content: str = get_data("inputs/day07.txt")
         data: list[int] = parse_data(content)
 
-        print(f"part1: {asyncio.run(part1(data))}")
-        print(f"part2: {asyncio.run(part2(data))}")
+        print(f"part1: {part1(data)}")
+        print(f"part2: {part2(data)}")
