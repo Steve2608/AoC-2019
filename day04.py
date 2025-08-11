@@ -6,7 +6,7 @@ Range = tuple[int, int]
 
 
 def parse_data(content: str) -> Range:
-    return tuple(map(int, content.strip().split("-")))
+    return tuple(map(int, content.split("-")))
 
 
 # password is 6 digits long ("rule1") is trivially true

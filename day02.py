@@ -2,7 +2,7 @@ from aoc_util import Timing, get_data
 
 
 def parse_data(content: str) -> list[int]:
-    return list(map(int, content.strip().split(",")))
+    return list(map(int, content.split(",")))
 
 
 def init(data: list[int], a: int, b: int) -> list[int]:

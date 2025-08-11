@@ -6,7 +6,7 @@ Orbit = tuple[str, str]
 
 
 def parse_data(content: str) -> list[Orbit]:
-    return [tuple(line.split(")")) for line in content.strip().splitlines()]
+    return [tuple(line.split(")")) for line in content.splitlines()]
 
 
 def part1(data: list[Orbit]) -> int:

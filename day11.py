@@ -183,7 +183,7 @@ class Program:
 
 
 def parse_data(data: str) -> list[int]:
-    return list(map(int, data.strip().split(",")))
+    return list(map(int, data.split(",")))
 
 
 async def run_robot(data: list[int], starting_color: int) -> dict[Coordinate, int]:

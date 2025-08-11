@@ -7,7 +7,7 @@ Coordinate = tuple[int, int]
 def parse_data(content: str) -> list[list[Direction]]:
     return [
         list(map(lambda x: (x[0], int(x[1:])), line.split(",")))
-        for line in content.strip().splitlines()
+        for line in content.splitlines()
     ]
 
 

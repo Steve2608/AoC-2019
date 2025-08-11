@@ -4,7 +4,7 @@ from time import perf_counter_ns as timestamp_nano
 
 def get_data(file_path: str) -> str:
     with open(file_path, "r") as in_file:
-        return in_file.read()
+        return in_file.read().strip()
 
 
 @dataclasses.dataclass(slots=True)

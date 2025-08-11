@@ -175,7 +175,7 @@ class Program:
 
 
 def parse_data(content: str) -> list[int]:
-    return list(map(int, content.strip().split(",")))
+    return list(map(int, content.split(",")))
 
 
 def part1(data: list[int]):

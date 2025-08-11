@@ -11,7 +11,7 @@ PolarCoordinate = tuple[float, float]
 def parse_data(content: str) -> list[Coordinate]:
     return [
         (x, y)
-        for y, line in enumerate(content.strip().splitlines())
+        for y, line in enumerate(content.splitlines())
         for x, point in enumerate(line)
         if point == "#"
     ]

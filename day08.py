@@ -8,7 +8,7 @@ TRANSPARENT = 2
 
 
 def parse_data(content: str) -> list[int]:
-    return list(map(int, content.strip()))
+    return list(map(int, content))
 
 
 def part1(data: list[int], width: int = 25, height: int = 6) -> int:
